@@ -15,6 +15,8 @@ const bodyParser = require("body-parser");
 const quizFileManager = require("./filesManager/quizFileManager");
 const usersConfigFileManager = require("./filesManager/usersConfigFileManager");
 const usersIdManager = require("./logic/usersIdManager");
+const userManager = require("./logic/userManager");
+const userFileManager = require("./filesManager/userFileManager");
 
 const app = express();
 app.use(bodyParser.json());
@@ -27,9 +29,12 @@ app.get("/quiz", (req, res) => {
 
 app.post("/users", (req, res) => {
    const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
-
+   const userName = req.body.name;
+   const newUser = userManager.createUser(userId, userName);
+   userFileManager.createUserFile(newUser);
    //if user data added update value, else value remain for valid user
    usersConfigFileManager.setIdCounter(userId);
+   //response
    res.send({ id: userId });
 });
 

@@ -14,3 +14,7 @@ const createUserFile = (user) => {
    const userJson = JSON.stringify(user);
    fs.writeFileSync(path.resolve(__dirname, "../../data/users", `${user.id}.json`), userJson);
 };
+
+module.exports = {
+   createUserFile,
+};
