@@ -1,12 +1,17 @@
+/**
+ Working plan:
+
+ */
+
 const quiz = [
    {
       id: 0,
       question: "text",
       answers: [
-         { answerId: 0, text: "what is yo" },
-         { answerId: 1, text: "answer1" },
+         { answerId: 1, text: "what is yo" },
          { answerId: 2, text: "answer1" },
          { answerId: 3, text: "answer1" },
+         { answerId: 4, text: "answer1" },
       ],
    },
 ];
@@ -20,11 +25,11 @@ const user = {
    id: 0,
    name: "ron",
    quizResults: [
-      { questionId: 0, answerId: 1 },
-      { questionId: 1, answerId: 1 },
-      { questionId: 2, answerId: 1 },
-      { questionId: 3, answerId: 1 },
-      { questionId: 4, answerId: 1 },
+      { questionId: 0, answerId: 0 },
+      { questionId: 1, answerId: 0 },
+      { questionId: 2, answerId: 0 },
+      { questionId: 3, answerId: 0 },
+      { questionId: 4, answerId: 0 },
    ],
    friendsQuizResults: [
       {
@@ -58,7 +63,10 @@ const user = {
  
    POST /user {name:""} -> {id: 0, name"", quizResult: [],friendsQuizResults[] "} -> return user id
 
-   POST /user/:id/quiz-results -> 
+    const userJson = data.getUserData(0);
+
+
+   PUT /user/:id/quiz-results -> 
    req data:
       [ 
          { questionId: 0, answerId: 3 },  
@@ -83,16 +91,3 @@ const user = {
   }
 
 */
-
-const quiz = [
-   {
-      id: 0,
-      question: "text",
-      answers: [
-         { answerId: 0, text: "what is yo" },
-         { answerId: 1, text: "answer1" },
-         { answerId: 2, text: "answer1" },
-         { answerId: 3, text: "answer1" },
-      ],
-   },
-];
