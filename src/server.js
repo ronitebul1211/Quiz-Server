@@ -10,9 +10,19 @@ https://expressjs.com/en/guide/error-handling.html
  # For errors returned from asynchronous functions invoked by route handlers and middleware, 
    you must pass them to the next() function, where Express will catch and process them.
  */
-
+const express = require("express");
+const bodyParser = require("body-parser");
 const filesManager = require("./utils/filesManager");
 
-const quiz = filesManager.getQuizData();
+const app = express();
+app.use(bodyParser.json());
 
-console.log(quiz);
+/** Get - response quiz data in json format */
+app.get("/quiz", (req, res) => {
+   const quiz = filesManager.getQuizData();
+   res.send(quiz);
+});
+
+app.listen(3000, () => {
+   console.log("server is up on port 3000 -> init here");
+});

@@ -12,8 +12,8 @@ const path = require("path");
 /** Get quiz object contain quiz data */
 const getQuizData = () => {
    const quizBuffer = fs.readFileSync(path.resolve(__dirname, "../../data/quiz/quiz.json"));
-   const quizJson = quizBuffer.toString();
-   return JSON.parse(quizJson);
+   const quizJsonString = quizBuffer.toString();
+   return JSON.parse(quizJsonString);
 };
 
 module.exports = {
