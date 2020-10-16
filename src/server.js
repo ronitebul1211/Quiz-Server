@@ -12,15 +12,25 @@ https://expressjs.com/en/guide/error-handling.html
  */
 const express = require("express");
 const bodyParser = require("body-parser");
-const filesManager = require("./utils/filesManager");
+const quizFileManager = require("./filesManager/quizFileManager");
+const usersConfigFileManager = require("./filesManager/usersConfigFileManager");
+const usersIdManager = require("./logic/usersIdManager");
 
 const app = express();
 app.use(bodyParser.json());
 
 /** Get - response quiz data in json format */
 app.get("/quiz", (req, res) => {
-   const quiz = filesManager.getQuizData();
+   const quiz = quizFileManager.getQuizData();
    res.send(quiz);
+});
+
+app.post("/users", (req, res) => {
+   const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
+
+   //if user data added update value, else value remain for valid user
+   usersConfigFileManager.setIdCounter(userId);
+   res.send({ id: userId });
 });
 
 app.listen(3000, () => {
