@@ -62,7 +62,6 @@ const user = {
  (add some config file to save the last used id and class rep)
  
    POST /user {name:""} -> {id: 0, name"", quizResult: [],friendsQuizResults[] "} -> return user id
-
     const userJson = data.getUserData(0);
 
 

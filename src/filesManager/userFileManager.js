@@ -10,11 +10,29 @@ const fs = require("fs");
 const path = require("path");
 
 /** Create json file represent user in data/users. (file name: user id, file content: user data */
-const createUserFile = (user) => {
+const saveUserInFile = (user) => {
    const userJson = JSON.stringify(user);
    fs.writeFileSync(path.resolve(__dirname, "../../data/users", `${user.id}.json`), userJson);
 };
 
+/** Update user file with new data */
+const updateUserInFile = (user) => {
+   const isUserFileExist = fs.existsSync(path.resolve(__dirname, "../../data/users", `${user.id}.json`));
+   if (isUserFileExist) {
+      saveUserInFile(user);
+   }
+};
+
+/** Get user data from file by user id */
+const getUserFromFile = (userId) => {
+   //TODO: throw file not exist = id not exist
+   const userBuffer = fs.readFileSync(path.resolve(__dirname, "../../data/users", `${userId}.json`));
+   const userJsonString = userBuffer.toString();
+   return JSON.parse(userJsonString);
+};
+
 module.exports = {
-   createUserFile,
+   saveUserInFile,
+   getUserFromFile,
+   updateUserInFile,
 };

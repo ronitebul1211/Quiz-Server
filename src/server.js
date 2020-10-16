@@ -21,21 +21,32 @@ const userFileManager = require("./filesManager/userFileManager");
 const app = express();
 app.use(bodyParser.json());
 
-/** Get - response quiz data in json format */
+/** Get - response with quiz data in json format */
 app.get("/quiz", (req, res) => {
    const quiz = quizFileManager.getQuizData();
    res.send(quiz);
 });
 
+/** POST - create new user response with user id */
 app.post("/users", (req, res) => {
    const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
    const userName = req.body.name;
    const newUser = userManager.createUser(userId, userName);
-   userFileManager.createUserFile(newUser);
+   userFileManager.saveUserInFile(newUser);
    //if user data added update value, else value remain for valid user
    usersConfigFileManager.setIdCounter(userId);
-   //response
+   //response with user id
    res.send({ id: userId });
+});
+
+app.put("/user/:userId/quiz-results", (req, res) => {
+   const userId = parseInt(req.params.userId);
+   const userResults = req.body;
+   const selectedUser = userFileManager.getUserFromFile(userId);
+   const updatedUser = userManager.updateUserQuizResults(selectedUser, userResults);
+   userFileManager.updateUserInFile(updatedUser);
+   //response with Success message
+   res.send("Quiz results added");
 });
 
 app.listen(3000, () => {
