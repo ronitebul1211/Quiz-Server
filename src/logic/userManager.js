@@ -24,6 +24,7 @@ const addFriend = (user, friendName) => {
       id: user.friends.length,
       name: friendName,
       quiz: initQuiz(4),
+      rightAnswers: 0,
    };
    user.friends.push(friend);
    return friend.id;
@@ -36,14 +37,48 @@ const updateFriendQuizResult = (user, friendId, questionId, answerId) => {
    const friendResult = getResult(friend.quiz, questionId);
    setAnswer(friendResult, answerId);
    const userResult = getResult(user.quiz, questionId);
+   updateFriendRank(friend, friendResult, userResult);
    return userResult.answerId;
 };
 
-const getFriendRank = () => {};
+/** Exported - Return specific friend rank */
+const getFriendRank = (user, friendId) => {
+   const friend = getFriend(user, friendId);
+   const friendRank = getRank(friend);
+   return friendRank;
+};
+
+/** Exported - Return friends ranks */
+const getFriendsRanks = (user) => {
+   const friendsRank = user.friends.map((friend) => getRank(friend));
+   return friendsRank;
+};
+
+/** Return rank object */
+const getRank = (friend) => {
+   const rank = {
+      friendId: friend.id,
+      friendName: friend.name,
+      rightAnswers: friend.rightAnswers,
+      totalQuestions: friend.quiz.length,
+   };
+   return rank;
+};
+
+/** Update friend right answers counter when his answer identical to user answer */
+const updateFriendRank = (friend, friendResult, userResult) => {
+   if (userResult.answerId === friendResult.answerId) {
+      friend.rightAnswers += 1;
+   }
+};
 
 /** Return friend from friends array by its id */
 const getFriend = (user, friendId) => {
-   return user.friends.find((friend) => friend.id === friendId);
+   const friend = user.friends.find((friend) => friend.id === friendId);
+   if (!friend) {
+      throw Error("Friend ID Not exist");
+   }
+   return friend;
 };
 
 /** Return result ({ questionId: num, questionId: num }) by question id */
@@ -77,4 +112,6 @@ module.exports = {
    updateUserQuizResults,
    addFriend,
    updateFriendQuizResult,
+   getFriendRank,
+   getFriendsRanks,
 };

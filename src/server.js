@@ -70,17 +70,21 @@ app.put("/user/:userId/friends/:friendId", (req, res) => {
    res.send({ userAnswerId });
 });
 
-/** GET - friend rank */
+/** GET - get specific user friend rank */
 app.get("/user/:userId/friends/:friendId/rank", (req, res) => {
    const userId = parseInt(req.params.userId);
    const friendId = parseInt(req.params.friendId);
-   console.log(userId, friendId);
-   // const questionId = parseInt(req.body.questionId);
-   // const answerId = parseInt(req.body.answerId);
-   // const selectedUser = userFileManager.getUserFromFile(userId);
-   // const userAnswerId = userManager.updateFriendQuizResult(selectedUser, friendId, questionId, answerId);
-   // userFileManager.updateUserInFile(selectedUser);
-   res.send("rank");
+   const selectedUser = userFileManager.getUserFromFile(userId);
+   const friendRank = userManager.getFriendRank(selectedUser, friendId);
+   res.send({ friendRank });
+});
+
+/** GET - get specific user ranks */
+app.get("/user/:userId/ranks", (req, res) => {
+   const userId = parseInt(req.params.userId);
+   const selectedUser = userFileManager.getUserFromFile(userId);
+   const friendsRanks = userManager.getFriendsRanks(selectedUser);
+   res.send({ friendsRanks });
 });
 
 app.listen(3000, () => {
