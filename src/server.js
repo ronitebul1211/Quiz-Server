@@ -27,7 +27,7 @@ app.get("/quiz", (req, res) => {
    res.send(quiz);
 });
 
-/** POST - create new user response with user id */
+/** POST - create new user, response with user id */
 app.post("/users", (req, res) => {
    const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
    const userName = req.body.name;
@@ -39,6 +39,7 @@ app.post("/users", (req, res) => {
    res.send({ id: userId });
 });
 
+/** PUT - update user quiz results, response with success message */
 app.put("/user/:userId/quiz-results", (req, res) => {
    const userId = parseInt(req.params.userId);
    const userResults = req.body;
@@ -47,6 +48,18 @@ app.put("/user/:userId/quiz-results", (req, res) => {
    userFileManager.updateUserInFile(updatedUser);
    //response with Success message
    res.send("Quiz results added");
+});
+
+/** POST - create new friend Quiz Result inside user, response with friend id */
+app.post("/user/:userId/friends-quiz-results", (req, res) => {
+   const userId = parseInt(req.params.userId);
+   const friendName = req.body.name;
+   const selectedUser = userFileManager.getUserFromFile(userId);
+   const { updatedUser, friendId } = userManager.addFriend(selectedUser, friendName);
+   //  console.log(updatedUser);
+   userFileManager.updateUserInFile(updatedUser);
+   //  res.send("Quiz results added");
+   res.send({ friendId });
 });
 
 app.listen(3000, () => {
