@@ -1,51 +1,72 @@
+/** Exported - Create new user */
 const createUser = (id, name) => {
-   //TODO:throw if id!=number, name!=string
    const newUser = {
       id,
       name,
-      quizResults: initQuizResults(),
+      quiz: initQuiz(4),
       friends: [],
    };
    return newUser;
+   //TODO:throw if id!=number, name!=string
 };
 
-const updateUserQuizResults = (user, resultsToUpdate) => {
-   //TODO:throw if result.length!= quiz length, answerId + questionId (number, check if possible to parse else throw)
-   user.quizResults.forEach((result) => {
-      const matchResult = resultsToUpdate.find(
-         (resultToUpdate) => result.questionId === resultToUpdate.questionId,
-      );
-      if (matchResult) {
-         if (matchResult.answerId > 0 && matchResult.answerId <= 4) {
-            result.answerId = matchResult.answerId;
-         } else {
-            throw Error(
-               `answer id for question id: ${matchResult.questionId}, should be a number between 1-4`,
-            );
-         }
-      } else {
-         throw Error("results is an array with 4 result object, questionId is unique number between 0-3");
-      }
+/** Exported - Update user quiz with updated result */
+const updateUserQuizResults = (user, updatedResults) => {
+   updatedResults.forEach((updatedResult) => {
+      const matchResult = getResult(user.quiz, updatedResult.questionId);
+      setAnswer(matchResult, updatedResult.answerId);
    });
-   return user;
 };
 
+/** Exported - Add friend to user */
 const addFriend = (user, friendName) => {
-   //TODO:throw if name!=string
    const friend = {
       id: user.friends.length,
       name: friendName,
-      quizResult: initQuizResults(),
+      quiz: initQuiz(4),
    };
    user.friends.push(friend);
-   return { updatedUser: user, friendId: friend.id };
+   return friend.id;
+   //TODO:throw if name!=string
 };
 
-/** inner */
-const initQuizResults = (quizId = 0) => {
-   //TODO: hardcoded: modify to init dynamically by quiz id
+/** Exported - update specific answer in friend quiz */
+const updateFriendQuizResult = (user, friendId, questionId, answerId) => {
+   const friend = getFriend(user, friendId);
+   const friendResult = getResult(friend.quiz, questionId);
+   setAnswer(friendResult, answerId);
+   const userResult = getResult(user.quiz, questionId);
+   return userResult.answerId;
+};
+
+const getFriendRank = () => {};
+
+/** Return friend from friends array by its id */
+const getFriend = (user, friendId) => {
+   return user.friends.find((friend) => friend.id === friendId);
+};
+
+/** Return result ({ questionId: num, questionId: num }) by question id */
+const getResult = (quiz, questionId) => {
+   const result = quiz.find((result) => result.questionId === questionId);
+   if (!result) {
+      throw Error("Question ID Not exist");
+   }
+   return result;
+};
+
+/** Set answer id to specific result */
+const setAnswer = (result, answerId) => {
+   if (answerId <= 0 || answerId >= 5) {
+      throw Error("Answer ID Not exist");
+   }
+   result.answerId = answerId;
+};
+
+/** Return quiz array contain result object contain answer id set to 0 (no answer), question id */
+const initQuiz = (questionCount) => {
    const quizResult = [];
-   for (let i = 0; i < 4; i++) {
+   for (let i = 0; i < questionCount; i++) {
       quizResult.push({ questionId: i, answerId: 0 });
    }
    return quizResult;
@@ -55,4 +76,5 @@ module.exports = {
    createUser,
    updateUserQuizResults,
    addFriend,
+   updateFriendQuizResult,
 };

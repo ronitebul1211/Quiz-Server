@@ -1,17 +1,37 @@
 {
    "id": 1,
    "name": "roni Tebul",
-   "quizResults": [
-      { "questionId": 0, "answerId": 3 },
+   "quiz": [
+      { "questionId": 0, "answerId": 1 },
       { "questionId": 1, "answerId": 2 },
-      { "questionId": 2, "answerId": 1 },
+      { "questionId": 2, "answerId": 2 },
       { "questionId": 3, "answerId": 4 }
    ],
    "friends": [
       {
          "id": 0,
          "name": "Romi",
-         "quizResult": [
+         "quiz": [
+            { "questionId": 0, "answerId": 0 },
+            { "questionId": 1, "answerId": 0 },
+            { "questionId": 2, "answerId": 4 },
+            { "questionId": 3, "answerId": 4 }
+         ]
+      },
+      {
+         "id": 1,
+         "name": "Romi",
+         "quiz": [
+            { "questionId": 0, "answerId": 0 },
+            { "questionId": 1, "answerId": 0 },
+            { "questionId": 2, "answerId": 0 },
+            { "questionId": 3, "answerId": 0 }
+         ]
+      },
+      {
+         "id": 2,
+         "name": "Romi",
+         "quiz": [
             { "questionId": 0, "answerId": 0 },
             { "questionId": 1, "answerId": 0 },
             { "questionId": 2, "answerId": 0 },

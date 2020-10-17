@@ -35,31 +35,52 @@ app.post("/users", (req, res) => {
    userFileManager.saveUserInFile(newUser);
    //if user data added update value, else value remain for valid user
    usersConfigFileManager.setIdCounter(userId);
-   //response with user id
-   res.send({ id: userId });
+   res.send({ userId });
 });
 
 /** PUT - update user quiz results, response with success message */
-app.put("/user/:userId/quiz-results", (req, res) => {
+app.put("/user/:userId/quiz", (req, res) => {
    const userId = parseInt(req.params.userId);
-   const userResults = req.body;
+   const updatedResults = req.body;
    const selectedUser = userFileManager.getUserFromFile(userId);
-   const updatedUser = userManager.updateUserQuizResults(selectedUser, userResults);
-   userFileManager.updateUserInFile(updatedUser);
-   //response with Success message
+   userManager.updateUserQuizResults(selectedUser, updatedResults);
+   userFileManager.updateUserInFile(selectedUser);
    res.send("Quiz results added");
 });
 
-/** POST - create new friend Quiz Result inside user, response with friend id */
-app.post("/user/:userId/friends-quiz-results", (req, res) => {
+/** POST - create in user friends new friend, response with friend id */
+app.post("/user/:userId/friends", (req, res) => {
    const userId = parseInt(req.params.userId);
    const friendName = req.body.name;
    const selectedUser = userFileManager.getUserFromFile(userId);
-   const { updatedUser, friendId } = userManager.addFriend(selectedUser, friendName);
-   //  console.log(updatedUser);
-   userFileManager.updateUserInFile(updatedUser);
-   //  res.send("Quiz results added");
+   const friendId = userManager.addFriend(selectedUser, friendName);
+   userFileManager.updateUserInFile(selectedUser);
    res.send({ friendId });
+});
+
+/** PUT - update user friend result for specific question, response with user answer */
+app.put("/user/:userId/friends/:friendId", (req, res) => {
+   const userId = parseInt(req.params.userId);
+   const friendId = parseInt(req.params.friendId);
+   const questionId = parseInt(req.body.questionId);
+   const answerId = parseInt(req.body.answerId);
+   const selectedUser = userFileManager.getUserFromFile(userId);
+   const userAnswerId = userManager.updateFriendQuizResult(selectedUser, friendId, questionId, answerId);
+   userFileManager.updateUserInFile(selectedUser);
+   res.send({ userAnswerId });
+});
+
+/** GET - friend rank */
+app.get("/user/:userId/friends/:friendId/rank", (req, res) => {
+   const userId = parseInt(req.params.userId);
+   const friendId = parseInt(req.params.friendId);
+   console.log(userId, friendId);
+   // const questionId = parseInt(req.body.questionId);
+   // const answerId = parseInt(req.body.answerId);
+   // const selectedUser = userFileManager.getUserFromFile(userId);
+   // const userAnswerId = userManager.updateFriendQuizResult(selectedUser, friendId, questionId, answerId);
+   // userFileManager.updateUserInFile(selectedUser);
+   res.send("rank");
 });
 
 app.listen(3000, () => {
