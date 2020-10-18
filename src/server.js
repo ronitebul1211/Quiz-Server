@@ -19,6 +19,7 @@ const userManager = require("./logic/userManager");
 const userFileManager = require("./filesManager/userFileManager");
 
 const app = express();
+const port = process.nev.PORT; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
 app.use(bodyParser.json());
 
 /** Get - response with quiz data in json format */
@@ -87,6 +88,6 @@ app.get("/user/:userId/ranks", (req, res) => {
    res.send({ friendsRanks });
 });
 
-app.listen(3000, () => {
-   console.log("server is up on port 3000 -> init here");
+app.listen(port, () => {
+   console.log(`server is up on port ${port}`);
 });
