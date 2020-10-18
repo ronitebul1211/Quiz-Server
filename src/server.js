@@ -18,8 +18,12 @@ const usersIdManager = require("./logic/usersIdManager");
 const userManager = require("./logic/userManager");
 const userFileManager = require("./filesManager/userFileManager");
 
+//TODO: refactor rank function to response without rank if friend didn't answer all questions
+//TODO: use destructuring in request body
+
+/** Script added to open nodemon -> npm run dev */
 const app = express();
-const port = process.env.PORT; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
+const port = process.env.PORT || 3000; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
 app.use(bodyParser.json());
 
 /** Get - response with quiz data in json format */
