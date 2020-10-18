@@ -19,7 +19,7 @@ const userManager = require("./logic/userManager");
 const userFileManager = require("./filesManager/userFileManager");
 
 const app = express();
-const port = process.nev.PORT; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
+const port = process.env.PORT; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
 app.use(bodyParser.json());
 
 /** Get - response with quiz data in json format */
