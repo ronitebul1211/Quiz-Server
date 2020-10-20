@@ -11,6 +11,7 @@ https://expressjs.com/en/guide/error-handling.html
    you must pass them to the next() function, where Express will catch and process them.
  */
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const quizFileManager = require("./filesManager/quizFileManager");
 const usersConfigFileManager = require("./filesManager/usersConfigFileManager");
@@ -24,6 +25,7 @@ const userFileManager = require("./filesManager/userFileManager");
 /** Script added to open nodemon -> npm run dev */
 const app = express();
 const port = process.env.PORT || 3000; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
+app.use(cors());
 app.use(bodyParser.json());
 
 /** Get - response with quiz data in json format */
