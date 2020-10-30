@@ -25,10 +25,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 /** Get - response with quiz data in json format */
-app.get("/quiz", (req, res) => {
-   const quiz = quizFileManager.getQuizData();
-   res.send(quiz);
-});
+// app.get("/quiz", (req, res) => {
+//    const quiz = quizFileManager.getQuizData();
+//    res.send(quiz);
+// });
 
 /** POST - create new user, response with user id */
 app.post("/users", (req, res) => {

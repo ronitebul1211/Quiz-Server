@@ -5,7 +5,7 @@ const router = new express.Router();
 
 router.get("/api/quiz", async (req, res) => {
    try {
-      const quiz = await Quiz.findOne();
+      const quiz = await Quiz.findOne().select("-_id -questions._id -questions.options._id");
       if (!quiz) {
          throw new Error("Mock Quiz not available");
       }
