@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const optionSchema = mongoose.Schema({
+   __id: {
+      type: String,
+      required: true,
+   },
    text: {
       type: String,
       required: true,
@@ -8,8 +12,16 @@ const optionSchema = mongoose.Schema({
 });
 
 const quizSchema = mongoose.Schema({
+   __id: {
+      type: String,
+      required: true,
+   },
    questions: [
       {
+         __id: {
+            type: String,
+            required: true,
+         },
          text: {
             type: String,
             required: true,
@@ -25,14 +37,5 @@ const quizSchema = mongoose.Schema({
 });
 
 const Quiz = mongoose.model("Quiz", quizSchema);
-
-// testQuiz
-//    .save()
-//    .then((res) => {
-//       console.log(res);
-//    })
-//    .catch((err) => {
-//       console.log(err);
-//    });
 
 module.exports = Quiz;

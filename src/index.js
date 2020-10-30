@@ -1,7 +1,12 @@
 const express = require("express");
-
 require("./db/mongoose"); // init db
-require("./model/quiz");
+const quizzesRouter = require("./routers/quiz");
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use(quizzesRouter);
 
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -15,8 +20,7 @@ const userFileManager = require("./filesManager/userFileManager");
 //TODO: use destructuring in request body
 
 /** Script added to open nodemon -> npm run dev */
-const app = express();
-const port = process.env.PORT || 3000; // Get port global var from heroku process or use 3000 when run locally and heroku port not exist
+
 app.use(cors());
 app.use(bodyParser.json());
 
