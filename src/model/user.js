@@ -2,13 +2,25 @@ const mongoose = require("mongoose");
 
 const resultSchema = new mongoose.Schema({
    question_id: {
-      type: Number,
+      type: String,
       required: true,
    },
    answer_id: {
-      type: Number,
+      type: String,
       required: true,
    },
+});
+
+const quizSchema = new mongoose.Schema({
+   id: {
+      type: String,
+      required: true,
+   },
+   results: [
+      {
+         type: resultSchema,
+      },
+   ],
 });
 
 const userSchema = new mongoose.Schema({
@@ -25,14 +37,7 @@ const userSchema = new mongoose.Schema({
       lowercase: true,
    },
    quiz: {
-      id: {
-         type: Number,
-      },
-      results: [
-         {
-            type: resultSchema,
-         },
-      ],
+      type: quizSchema,
    },
 });
 

@@ -1,8 +1,7 @@
-const { TestScheduler } = require("jest");
 const mongoose = require("mongoose");
 
 const optionSchema = mongoose.Schema({
-   __id: {
+   id: {
       type: String,
       required: true,
    },
@@ -13,13 +12,13 @@ const optionSchema = mongoose.Schema({
 });
 
 const quizSchema = mongoose.Schema({
-   __id: {
+   id: {
       type: String,
       required: true,
    },
    questions: [
       {
-         __id: {
+         id: {
             type: String,
             required: true,
          },

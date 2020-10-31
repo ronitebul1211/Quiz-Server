@@ -44,14 +44,14 @@ app.use(bodyParser.json());
 // });
 
 /** PUT - update user quiz results, response with success message */
-app.put("/user/:userId/quiz", (req, res) => {
-   const userId = parseInt(req.params.userId);
-   const updatedResults = req.body;
-   const selectedUser = userFileManager.getUserFromFile(userId);
-   userManager.updateUserQuizResults(selectedUser, updatedResults);
-   userFileManager.updateUserInFile(selectedUser);
-   res.send("Quiz results added");
-});
+// app.put("/user/:userId/quiz", (req, res) => {
+//    const userId = parseInt(req.params.userId);
+//    const updatedResults = req.body;
+//    const selectedUser = userFileManager.getUserFromFile(userId);
+//    userManager.updateUserQuizResults(selectedUser, updatedResults);
+//    userFileManager.updateUserInFile(selectedUser);
+//    res.send("Quiz results added");
+// });
 
 /** POST - create in user friends new friend, response with friend id */
 app.post("/user/:userId/friends", (req, res) => {
