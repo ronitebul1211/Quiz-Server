@@ -70,6 +70,7 @@ const resetQuizzesCollection = async () => {
 
 const insertMockQuiz = async () => {
    await Quiz.create(quizData);
+   console.log("insert mock quiz");
 };
 
 const init = async () => {

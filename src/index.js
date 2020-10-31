@@ -1,12 +1,14 @@
 const express = require("express");
 require("./db/mongoose"); // init db
 const quizzesRouter = require("./routers/quiz");
+const usersRouter = require("./routers/user");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(quizzesRouter);
+app.use(usersRouter);
 
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -31,15 +33,15 @@ app.use(bodyParser.json());
 // });
 
 /** POST - create new user, response with user id */
-app.post("/users", (req, res) => {
-   const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
-   const userName = req.body.name;
-   const newUser = userManager.createUser(userId, userName);
-   userFileManager.saveUserInFile(newUser);
-   //if user data added update value, else value remain for valid user
-   usersConfigFileManager.setIdCounter(userId);
-   res.send({ userId });
-});
+// app.post("/users", (req, res) => {
+//    const userId = usersIdManager.generateId(usersConfigFileManager.getIdCounter());
+//    const userName = req.body.name;
+//    const newUser = userManager.createUser(userId, userName);
+//    userFileManager.saveUserInFile(newUser);
+//    //if user data added update value, else value remain for valid user
+//    usersConfigFileManager.setIdCounter(userId);
+//    res.send({ userId });
+// });
 
 /** PUT - update user quiz results, response with success message */
 app.put("/user/:userId/quiz", (req, res) => {
